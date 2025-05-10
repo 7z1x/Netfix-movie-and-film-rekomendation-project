@@ -158,3 +158,11 @@ Precision@10: 0.4
 Recall@10: 0.25
 Hit Rate: 1.0
 Angka-angka ini menunjukkan bahwa model mampu merekomendasikan film dengan judul yang relevan dalam jumlah yang signifikan, dan setidaknya ada satu film relevan di hasil rekomendasi.
+
+## Kesimpulan
+### Hasil Evaluasi
+Evaluasi model Collaborative Filtering (SVD) menghasilkan nilai RMSE sebesar 0.86 dan MAE sebesar 0.66, yang menunjukkan bahwa model ini cukup baik dalam memprediksi rating pengguna terhadap film. Sementara itu, Content-Based Filtering yang dievaluasi menggunakan Precision@10 sebesar 0.4, Recall@10 sebesar 0.25, dan Hit Rate sebesar 1.0, menunjukkan bahwa sistem mampu merekomendasikan film yang cukup relevan berdasarkan kemiripan judul, meskipun cakupannya terhadap semua film relevan masih terbatas.
+
+###Kelebihan dan Kekurangan
+Collaborative Filtering memiliki keunggulan dalam memberikan rekomendasi yang bersifat personal karena mempertimbangkan preferensi pengguna lain yang serupa, namun lemah dalam menangani data pengguna atau film baru (cold start). Sebaliknya, Content-Based Filtering lebih kuat untuk merekomendasikan film baru karena hanya mengandalkan informasi konten seperti judul, namun cenderung memberikan hasil yang kurang variatif karena terbatas pada kemiripan fitur permukaan.
+
