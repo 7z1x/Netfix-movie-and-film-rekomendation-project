@@ -57,9 +57,10 @@ Berisi informasi detail tentang film dalam dataset:
 
 ### Distribusi Data
 - Sebaran rating dianalisis menggunakan histogram dan menunjukkan bahwa sebagian besar pengguna memberikan rating di tengah-tengah skala (3–4).
-![](gambar rating film)<br>
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/rating.jpg)<br>
+
 - Film dengan jumlah rating terbanyak juga telah divisualisasikan untuk mengidentifikasi film yang paling populer berdasarkan partisipasi pengguna.
-![](gambar film terbanyak)<br>
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/jumlah%20film.jpg)<br>
 
 ### Preprocessing
 - Pemeriksaan nilai kosong (missing values):
