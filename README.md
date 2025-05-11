@@ -27,7 +27,7 @@ Metode Content-Based Filtering terbukti menghasilkan rekomendasi yang relevan de
 
 ## Data Understanding
 ### Informasi Data
-Dataset yang digunakan dalam proyek ini diunduh dari platform Kaggle dengan nama Netflix Movie Rating Dataset. Dataset ini terdiri dari dua file utama:
+Dataset yang digunakan dalam proyek ini diunduh dari platform [Kaggle](https://www.kaggle.com/datasets/rishitjavia/netflix-movie-rating-dataset) dengan nama Netflix Movie Rating Dataset. Dataset ini terdiri dari dua file utama:
 ## 📄 Dataset
 
 | Nama File                  | Deskripsi                                                                 |
