@@ -25,9 +25,11 @@ Penggunaan SVD dalam sistem rekomendasi telah terbukti efektif dalam meningkatka
 - Pendekatan ini merekomendasikan film berdasarkan kesamaan atribut konten film dengan preferensi pengguna. Dalam proyek ini, fitur yang digunakan meliputi judul film. Sistem akan menganalisis film yang disukai oleh pengguna, kemudian mencari film lain yang memiliki kemiripan konten. Misalnya, film dengan kata kunci tertentu dalam judulnya, maka sistem akan merekomendasikan film serupa berdasarkan karakteristik tersebut.
 Metode Content-Based Filtering terbukti menghasilkan rekomendasi yang relevan dengan tingkat presisi dan recall yang tinggi, terutama saat menggunakan teknik kemiripan seperti cosine similarity [4].
 
+<br>
+
 ## Data Understanding
 ### Informasi Data
-Dataset yang digunakan dalam proyek ini diunduh dari platform [Kaggle](https://www.kaggle.com/datasets/rishitjavia/netflix-movie-rating-dataset) dengan nama Netflix Movie Rating Dataset. Dataset ini terdiri dari dua file utama:
+Dataset yang digunakan dalam proyek ini diunduh dari platform [Dataset Kaggle](https://www.kaggle.com/datasets/rishitjavia/netflix-movie-rating-dataset) dengan nama akun @rishitjavia Netflix Movie Rating Dataset. Dataset ini terdiri dari dua file utama:
 ## 📄 Dataset
 
 | Nama File                  | Deskripsi                                                                 |
@@ -35,51 +37,81 @@ Dataset yang digunakan dalam proyek ini diunduh dari platform [Kaggle](https://w
 | Netflix_Dataset_Rating.csv| Berisi informasi rating yang diberikan pengguna terhadap film.            |
 | Netflix_Dataset_Movie.csv | Berisi metadata dari film, seperti judul dan tahun rilis. |
 
+
 ### Variabel/Fitur
 ### 📁 Netflix_Dataset_Rating.csv
-Berisi data interaksi pengguna dengan film berupa rating:
+Berisi **17.337.458 juta data 3 fitur** dibawah ini:
 
-| Kolom     | Tipe Data | Deskripsi                                                              |
-|-----------|-----------|-------------------------------------------------------------------------|
-| User_ID   | Integer   | ID unik pengguna                                                       |
-| Movie_ID  | Integer   | ID unik film                                                           |
-| Rating    | Integer   | Nilai rating yang diberikan pengguna terhadap film (skala 1–5)         |
+| Kolom     | Tipe Data | Deskripsi                                                              | Data Unik    |
+|-----------|-----------|-------------------------------------------------------------------------|------------|
+| User_ID   | Integer   | ID unik pengguna                                                       | 143458     |
+| Movie_ID  | Integer   | ID unik film                                                           | 1350       |
+| Rating    | Integer   | Nilai rating yang diberikan pengguna terhadap film (skala 1–5)         | 5          |
+
+
+
 
 ### 📁 Netflix_Dataset_Movie.csv
 
-Berisi informasi detail tentang film dalam dataset:
+Berisi **17770 data informasi dan 3 fitur** detail tentang film dalam dataset:
 
-| Kolom     | Tipe Data | Deskripsi           |
-|-----------|-----------|----------------------|
-| Movie_ID  | Integer   | ID unik film         |
-| Year      | Integer   | Tahun rilis film     |
-| Name      | Object    | Judul film           |
+| Kolom     | Tipe Data | Deskripsi           | Data Unik  |
+|-----------|-----------|----------------------|---------|
+| Movie_ID  | Integer   | ID unik film         | 17770   |
+| Year      | Integer   | Tahun rilis film     | 91      |
+| Name      | Object    | Judul film           | 17297   |
+
+### Pemeriksaan nilai kosong (missing values) & Duplikasi:
+
+| Kolom     | Jumlah Missing Values | Jumlah Duplikasi |
+|-----------|------------------------|------------------|
+| User_ID   | 0                      | 0                |
+| Movie_ID  | 0                      | 0                |
+| Rating    | 0                      | 0                |
+
+| Kolom     | Jumlah Missing Values | Jumlah Duplikasi |
+|-----------|------------------------|------------------|
+| Movie_ID   | 0                      | 0                |
+| Year       | 0                      | 0                |
+| Name   | 0                      | 0                |
 
 ### Distribusi Data
 - Sebaran rating dianalisis menggunakan histogram dan menunjukkan bahwa sebagian besar pengguna memberikan rating di tengah-tengah skala (3–4).
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/rating.jpg)<br>
+  
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/rating.jpg)
 
 - Film dengan jumlah rating terbanyak juga telah divisualisasikan untuk mengidentifikasi film yang paling populer berdasarkan partisipasi pengguna.
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/jumlah%20film.jpg)<br>
+  
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/jumlah%20film.jpg)
 
-### Preprocessing
-- Pemeriksaan nilai kosong (missing values):
+### Cek Outlier
+- Dataset Rating : Semua kolom terlihat bersih, tidak ada outlier signifikan secara statistik, untuk **rating**  hanya sedikit outlier yang menjadi titik pada boxplotnya namun nilai rendah seperti 1 sebagai outlier secara statistik, bukan karena nilai itu salah, tapi karena distribusi data yang tidak seimbang (kebanyakan nilai 3–5)
+  
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_Movie_ID.png)
 
-| Kolom     | Jumlah Missing Values |
-|-----------|------------------------|
-| User_ID   | 0                      |
-| Movie_ID  | 0                      |
-| Rating    | 0                      |
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_Rating.png)
 
-| Kolom     | Jumlah Missing Values |
-|-----------|------------------------|
-| Movie_ID  | 0                      |
-| Year      | 0                      |
-| Name      | 0                      |
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_User_ID.png)
 
-- Pemeriksaan duplikasi:
+<br>
 
-  - Tidak ditemukan baris duplikat pada kedua dataset.
+- Dataset Movie : Dataset memiliki outlier pada kolom **Year** namun tidak perlu ditangani karena kolom ini tidak digunakan sebagai fitur dalam content-based filtering dan tidak memengaruhi hasil rekomendasi.
+
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_movie_df_Movie_ID.png)
+
+![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_Year.png)
+
+<br>
+
+## Data Preparation
+- Handling Missing Value
+  - Karena tidak ada yang null pada kedua dataset, maka tidak diperlukan proses imputasi atau penghapusan data akibat missing value. Hal ini mempercepat proses data preparation dan memastikan bahwa seluruh data dapat digunakan secara maksimal dalam proses training dan evaluasi model.
+
+- Handling Duplicates
+  - Karena tidak ada duplicate maka tidak diperlukan proses penghapusan data ganda. Ini menunjukkan bahwa data yang tersedia telah bersih dari redundansi dan siap digunakan untuk proses analisis dan pemodelan tanpa risiko perhitungan ganda yang dapat memengaruhi hasil.
+
+- Handling Outliers
+  -  Karena outlier pada rating bukan karena nilai itu salah, tapi karena distribusi data yang tidak seimbang (kebanyakan nilai 3–5), maka tidak diperlukan proses tindakan handling outlier karena data itu juga penting dalam model nantinya. dan pada movie_df dataset movie terdapat outliers pada year namun tidak digunakan sebagai fitur, outlier tidak akan berdampak signifikan, jika dibuang berpotensi kehilangan film klasik atau penting secara historis.
 
 - Penggabungan data:
 
@@ -95,36 +127,99 @@ Berisi informasi detail tentang film dalam dataset:
 | 439011   | 1      | 3        | 1997 | Character |
 | ...      | ...    | ...      | ...  | ...       |
 
-- Prepare Data
+### Collaborative Filltering Preparation
   - Pemilihan Kolom Relevan: Hanya kolom User_ID, Movie_ID, dan Rating yang dipilih, karena ini merupakan struktur dasar dari user-item interaction matrix dalam sistem rekomendasi.
+
   - Penyesuaian Skala Rating: Objek Reader dari library Surprise digunakan untuk mendefinisikan rentang rating (1–5), yang penting agar model memahami batas nilai saat mempelajari preferensi pengguna.
-  - Konversi ke Format Surprise: Dataset diformat menggunakan Dataset.load_from_df() agar bisa digunakan oleh algoritma Surprise seperti SVD, KNN, dll
 
-- Train-Test Split
-Data dibagi menjadi dua bagian:
-  - Training set (80%) digunakan untuk melatih model.
-  - Test set (20%) digunakan untuk mengukur performa model terhadap data yang belum pernah dilihat.
-  - Pembagian dilakukan menggunakan fungsi train_test_split dari surprise.model_selection.
-Surprise adalah sebuah pustaka Python yang dirancang khusus untuk membangun dan menganalisis sistem rekomendasi yang berfokus pada data rating eksplisit[5]. Library ini menyediakan berbagai algoritma prediksi, termasuk metode collaborative filtering berbasis matrix factorization seperti SVD, serta alat bantu untuk evaluasi model dan pemilihan parameter.
+  - Konversi ke Format Surprise: Dataset diformat menggunakan Dataset.load_from_df() agar bisa digunakan oleh algoritma Surprise SVD.
+      
+```python
+data_df = df[['User_ID', 'Movie_ID', 'Rating']]
+reader = Reader(rating_scale=(1, 5))
+data = Dataset.load_from_df(data_df, reader)
+```
 
+  - Train-Test Split, data dibagi menjadi dua bagian, training set (80%) digunakan untuk melatih model. Test set (20%) digunakan untuk mengukur performa model terhadap data yang belum pernah dilihat. Pembagian dilakukan menggunakan fungsi train_test_split dari surprise.model_selection.
+```python
+trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
+```
+
+  - Surprise adalah sebuah pustaka Python yang dirancang khusus untuk membangun dan menganalisis sistem rekomendasi yang berfokus pada data rating eksplisit[5]. Library ini menyediakan berbagai algoritma prediksi, termasuk metode collaborative filtering berbasis matrix factorization seperti SVD, serta alat bantu untuk evaluasi model dan pemilihan parameter.
+
+
+### Collaborative Filltering Preparation
+  - Memastikan bahwa hanya film unik yang digunakan dalam proses pemodelan dengan menghapus duplikat pada kolom Movie_ID, Name, dan Year. Selain itu, nilai kosong pada kolom Name diisi dengan string kosong ('') agar tidak mengganggu proses ekstraksi fitur berbasis teks pada tahap content-based filtering.
+```python
+movie_features = movie_df[['Movie_ID', 'Name', 'Year']].drop_duplicates()
+movie_features['Name'] = movie_features['Name'].fillna('')
+movie_features.sample(5)
+```
+  - Melakukan text preprocessing pada judul film untuk meningkatkan kualitas representasi teks sebelum dihitung kemiripannya. Prosesnya mencakup normalisasi huruf kecil, penghapusan angka dan tanda baca, serta pembersihan spasi.
+  - Setelah teks dibersihkan, dilakukan ekstraksi fitur menggunakan teknik yang digunakan TF-IDF (Term Frequency-Inverse Document Frequency) digunakan untuk mengekstraksi fitur dari teks judul film menjadi numerik. TF-IDF adalah metode yang digunakan untuk merepresentasikan dokumen dalam ruang vektor berdimensi tinggi, menangkap konten unik mereka sambil mengurangi pengaruh istilah umum[7].
+```python
+def preprocess_text(text):
+    text = text.lower()  
+    text = re.sub(r'\d+', '', text)  
+    text = text.translate(str.maketrans('', '', string.punctuation))  
+    text = text.strip()  
+    return text
+
+movie_features = movie_features.reset_index(drop=True)
+movie_features['Clean_Name'] = movie_features['Name'].apply(preprocess_text)
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(movie_features['Clean_Name'])
+```
+
+<br>
 
 ## Modeling
 
-### Pelatihan Model Collaborative Filtering
-- Model SVD dilatih dengan parameter default (jumlah epoch = 10). Model dilatih pada data training yang telah diformat menjadi objek Dataset dari surprise.
+### Model Collaborative Filtering
+- Model menggunakan algoritma SVD yang dilatih selama 10 epoch, artinya model akan menyempurnakan representasi laten pengguna dan item melalui 10 iterasi agar semakin akurat dalam memprediksi rating.
+- Evaluasi menggunakan RMSE (Root Mean Squared Error) memberikan gambaran sejauh mana prediksi rating model mendekati rating sebenarnya; semakin rendah nilai RMSE, semakin akurat model.
+- Model SVD bekerja dengan mendekomposisi matriks rating pengguna-item menjadi representasi laten berdimensi rendah, yang menangkap pola tersembunyi antara preferensi pengguna dan karakteristik item; melalui proses ini, sistem mampu memprediksi rating yang belum diberikan secara akurat meskipun data sangat jarang (sparse), SVD terbukti memiliki keunggulan dalam menangani dataset besar, mengekstraksi fitur, mengurangi noise dan dimensi, sehingga mempercepat komputasi[10].
+- Proses sistem rekomendasi berbasis model prediktif SVD yang digunakan untuk menghasilkan rekomendasi personal bagi pengguna berdasarkan estimasi rating tertinggi terhadap film yang belum pernah mereka tonton. Prosesnya meliputi:
+  - Identifikasi film yang belum ditonton oleh pengguna (unrated_movies), agar sistem hanya memberikan rekomendasi yang benar-benar baru dan relevan.
+  - Prediksi rating untuk semua film tersebut menggunakan model SVD yang telah dilatih sebelumnya, yang memanfaatkan pola tersembunyi antara pengguna dan item.
+  - Seleksi Top-N rekomendasi dengan memilih 10 film dengan estimasi rating tertinggi, menunjukkan sistem tidak hanya memprediksi tetapi juga memprioritaskan konten terbaik untuk pengguna.
+  - Penggabungan data film seperti judul dan tahun rilis agar hasil rekomendasi dapat disajikan secara informatif dan mudah dipahami.
+  - Secara keseluruhan, proses ini mencerminkan praktik standar dalam sistem rekomendasi modern, di mana pendekatan filtering prediktif digunakan untuk meningkatkan pengalaman pengguna melalui saran yang bersifat personal, relevan, dan data-driven.
 
-### Prediksi dan Rekomendasi
-- Kesalahan kuadrat rata-rata akar (Root Mean Squared Error - RMSE) dan kesalahan absolut rata-rata (Mean Absolute Error - MAE) adalah dua metrik standar yang digunakan dalam evaluasi model. Untuk sampel sebanyak n observasi y (yi, i = 1,2,..., n) dan n prediksi model yang bersesuaian ŷ[6]
-- Setelah pelatihan selesai, prediksi dilakukan terhadap test set. Selain itu, sistem juga menghasilkan rekomendasi film untuk dua pengguna secara spesifik, berdasarkan prediksi rating tertinggi terhadap film-film yang belum pernah mereka beri rating.
+```python
+# Langkah 1: Ambil semua Movie_ID yang belum di-rating oleh user 
+user_id = (user_id)
 
-| Metrik | Nilai   |
-|--------|---------|
-| RMSE   | 0.8689  |
-<br>
+# Movie yang sudah dirating oleh user ini
+rated_movies = data_df[data_df['User_ID'] == user_id]['Movie_ID'].tolist()
 
-- Ambil 10 film dengan prediksi rating tertinggi, tampilkan judul dan tahun film sebagai rekomendasi.<br>
-  
-- Rekomendasi Film untuk User 2643069
+# Movie yang belum dirating
+all_movies = data_df['Movie_ID'].unique()
+unrated_movies = [movie for movie in all_movies if movie not in rated_movies]
+
+# Langkah 2: Prediksi rating untuk semua movie yang belum dirating
+user_predictions = [model.predict(user_id, movie_id) for movie_id in unrated_movies]
+
+# Langkah 3: Ambil top-N (misal 10) dengan rating tertinggi
+top_n_preds = sorted(user_predictions, key=lambda x: x.est, reverse=True)[:10]
+
+# Langkah 4: Ambil informasi judul dan tahun dari movie_df
+top_n_result = []
+for pred in top_n_preds:
+    movie_info = movie_df[movie_df['Movie_ID'] == int(pred.iid)].iloc[0]
+    top_n_result.append({
+        'Year': movie_info['Year'],
+        'Name': movie_info['Name'],
+        'Estimated_Rating': round(pred.est, 4)
+    })
+
+# Langkah 5: Tampilkan hasil rekomendasi
+top_n_df = pd.DataFrame(top_n_result)
+print(top_n_df)
+```
+
+- Ambil 10 film dengan prediksi rating tertinggi, tampilkan judul dan tahun film sebagai rekomendasi.
+  - Rekomendasi Film untuk user_id: 2643069
 
 | No | Tahun | Judul Film                                        | Estimasi Rating |
 |----|-------|---------------------------------------------------|-----------------|
@@ -139,29 +234,65 @@ Surprise adalah sebuah pustaka Python yang dirancang khusus untuk membangun dan 
 | 9  | 2002  | Curb Your Enthusiasm: Season 3                    | 4.6367          |
 | 10 | 1995  | Pride and Prejudice                               | 4.6352          |
 
+   - Rekomendasi untuk user_id : 43441
 
-### Evaluation
-- RMSE (Root Mean Square Error): Mengukur seberapa besar perbedaan antara rating sebenarnya dan prediksi. Semakin kecil nilai RMSE, semakin baik prediksi model.
-- MAE (Mean Absolute Error): Rata-rata kesalahan absolut antara rating aktual dan prediksi.
-  
-| Metrik | Nilai   |
-|--------|---------|
-| RMSE   | 0.8689  |
-| MAE    | 0.6781  |
+| No | Tahun | Judul Film                     | Estimasi Rating |
+|----|-------|--------------------------------|-----------------|
+| 1  | 2004  | Lost: Season 1                 | 4.6197          |
+| 2  | 2001  | The West Wing: Season 3        | 4.4577          |
+| 3  | 1994  | The Simpsons: Season 6         | 4.4395          |
+| 4  | 2004  | Stargate SG-1: Season 8        | 4.4234          |
+| 5  | 1995  | Pride and Prejudice            | 4.3858          |
+| 6  | 2002  | Gilmore Girls: Season 3        | 4.3693          |
+| 7  | 2004  | Six Feet Under: Season 4       | 4.3690          |
+| 8  | 2001  | Alias: Season 1                | 4.3671          |
+| 9  | 2003  | Foyle's War: Set 2             | 4.3659          |
+| 10 | 2002  | Firefly                        | 4.3624          |
 
-- Hasil Evaluasi
-  - RMSE: Nilai RMSE dari hasil pengujian menunjukkan bahwa model memiliki error prediksi yang dapat diterima untuk skala 1–5.
-  - MAE: Nilai MAE juga menunjukkan rata-rata kesalahan yang relatif rendah, memperkuat bukti bahwa model memberikan prediksi yang cukup akurat.
-  - Model ini mampu memberikan hasil rekomendasi yang relevan berdasarkan pola interaksi pengguna lain, sesuai tujuan dari sistem rekomendasi berbasis Collaborative Filtering.
+<br>
 
 ### Modeling Content-Based Filtering
 
-- Teknik yang digunakan TF-IDF (Term Frequency-Inverse Document Frequency) digunakan untuk mengekstraksi fitur dari teks judul film menjadi numerik. TF-IDF adalah metode yang digunakan untuk merepresentasikan dokumen dalam ruang vektor berdimensi tinggi, menangkap konten unik mereka sambil mengurangi pengaruh istilah umum[7]
 - Cosine Similarity digunakan untuk mengukur kemiripan antar vektor judul film. Cosine similarity digunakan untuk mengukur kesamaan antara dua dokumen dengan menghitung cosinus dari sudut antara vektor TF-IDF mereka[7]. Menggunakan linear_kernel untuk menghitung cosine similarity antar semua kombinasi film berdasarkan vektor TF-IDF.
+```python
+cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+```
+  
 - Fungsi Rekomendasi
-
   - Fungsi get_recommendations(movie_id) mengambil Movie_ID dari film referensi dan mengembalikan daftar film paling mirip berdasarkan kemiripan judul, misal **Judul yang dicari : Lost: Season 1**
-<br>
+# Fungsi untuk memberikan rekomendasi berdasarkan movie_id
+```python
+def get_recommendations(movie_id, cosine_sim, movie_id_to_index, movie_df, top_n=10):
+    # Cek apakah movie_id ada dalam mapping
+    if movie_id not in movie_id_to_index:
+        return f"Movie_ID {movie_id} tidak ditemukan dalam data."
+    
+    idx = movie_id_to_index[movie_id]
+    
+    # Ambil skor similarity untuk film tersebut
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    
+    # Urutkan berdasarkan skor similarity dan ambil top_n
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:top_n+1]
+    
+    # Ambil indeks film yang relevan berdasarkan skor similarity
+    movie_indices = [i[0] for i in sim_scores]
+    similarity_scores = [i[1] for i in sim_scores]
+    
+    # Ambil informasi film yang relevan berdasarkan indeks
+    recommended_movies = movie_df.iloc[movie_indices][['Movie_ID', 'Name', 'Year']]
+    
+    # Tambahkan kolom Similarity ke dalam hasil rekomendasi
+    recommended_movies['Similarity'] = similarity_scores
+    
+    # Urutkan berdasarkan Similarity
+    recommended_movies = recommended_movies.sort_values(by='Similarity', ascending=False)
+    
+    return recommended_movies[['Movie_ID', 'Name', 'Year', 'Similarity']]
+
+recommendations = get_recommendations(3456, cosine_sim, movie_id_to_index, movie_features)
+print(recommendations)
+```
 
 ### Daftar Film dengan Similarity Tertinggi
 
@@ -178,9 +309,23 @@ Surprise adalah sebuah pustaka Python yang dirancang khusus untuk membangun dan 
 | 5931     | Lost in Space: Season 2: Vol. 2          | 1966 | 0.659653   |
 | 8136     | Lost in Space: Season 3: Vol. 2          | 1968 | 0.659653   |
 
+## Evaluation
+### Evaluation Collaborative Filtering
+- RMSE (Root Mean Square Error): Mengukur seberapa besar perbedaan antara rating sebenarnya dan prediksi. Semakin kecil nilai RMSE, semakin baik prediksi model.
+- MAE (Mean Absolute Error): Rata-rata kesalahan absolut antara rating aktual dan prediksi.
+  
+| Metrik | Nilai   |
+|--------|---------|
+| RMSE   | 0.8689  |
+| MAE    | 0.6781  |
 
-### Evaluation
-Untuk mengukur seberapa baik rekomendasi dari model Content-Based Filtering, dilakukan evaluasi berbasis similarity judul menggunakan library fuzzywuzzy. FuzzyWuzzy adalah library Python yang menggunakan algoritma Levenshtein distance untuk mengukur kesamaan antara dua string[7]. Evaluasi dilakukan dengan pendekatan berikut:
+- Hasil Evaluasi
+  - RMSE: Nilai RMSE dari hasil pengujian menunjukkan bahwa model memiliki error prediksi yang dapat diterima untuk skala 1–5.
+  - MAE: Nilai MAE juga menunjukkan rata-rata kesalahan yang relatif rendah, memperkuat bukti bahwa model memberikan prediksi yang cukup akurat.
+  - Model ini mampu memberikan hasil rekomendasi yang relevan berdasarkan pola interaksi pengguna lain, sesuai tujuan dari sistem rekomendasi berbasis Collaborative Filtering.
+
+### Evaluation Content-Based Filtering
+Untuk mengukur seberapa baik rekomendasi dari model Content-Based Filtering, dilakukan evaluasi berbasis similarity judul menggunakan library fuzzywuzzy. FuzzyWuzzy adalah library Python yang menggunakan algoritma Levenshtein distance untuk mengukur kesamaan antara dua string[9]. Evaluasi dilakukan dengan pendekatan berikut:
 
 - Ground Truth: Film dianggap relevan jika memiliki kemiripan judul (berdasarkan fuzz.partial_ratio) di atas 80 terhadap film referensi.
 
@@ -203,8 +348,7 @@ Untuk mengukur seberapa baik rekomendasi dari model Content-Based Filtering, dil
 Angka-angka ini menunjukkan bahwa model mampu merekomendasikan film dengan judul yang relevan dalam jumlah yang signifikan, dan setidaknya ada satu film relevan di hasil rekomendasi.
 
 ## Kesimpulan
-### Hasil Evaluasi
-Evaluasi model Collaborative Filtering (SVD) menghasilkan nilai RMSE sebesar 0.86 dan MAE sebesar 0.66, yang menunjukkan bahwa model ini cukup baik dalam memprediksi rating pengguna terhadap film. Sementara itu, Content-Based Filtering yang dievaluasi menggunakan Precision@10 sebesar 0.4, Recall@10 sebesar 0.25, dan Hit Rate sebesar 1.0, menunjukkan bahwa sistem mampu merekomendasikan film yang cukup relevan berdasarkan kemiripan judul, meskipun cakupannya terhadap semua film relevan masih terbatas.
+Evaluasi model Collaborative Filtering (SVD) menghasilkan nilai RMSE sebesar 0.86 dan MAE sebesar 0.66, yang menunjukkan bahwa model ini cukup baik dalam memprediksi rating pengguna terhadap film. Sementara itu, Content-Based Filtering yang dievaluasi menggunakan Precision@10 sebesar 0.4, Recall@10 sebesar 0.25, dan Hit Rate sebesar 1.0, menunjukkan bahwa sistem mampu merekomendasikan film yang cukup relevan berdasarkan kemiripan judul, meskipun cakupannya terhadap semua film relevan masih terbatas. Dari kesimpulan ini model Collaborative Filtering (SVD) lebih cocok ketimbang Content-Based Filtering karena dataset yang saya gunakan cenderung lebih cenderung lebih besar dan kurang beragam beragam. Collaborative Filtering (SVD) sangat efektif dalam menangkap pola tersembunyi dalam preferensi pengguna yang tidak bergantung pada fitur eksplisit dari item (seperti genre, aktor, atau deskripsi film). Sebaliknya, Content-Based Filtering membutuhkan fitur eksplisit dari item untuk membuat rekomendasi, yang mungkin tidak tersedia atau tidak lengkap dalam dataset yang saya gunakan.
 
 ### Kelebihan dan Kekurangan
 Collaborative Filtering memiliki keunggulan dalam memberikan rekomendasi yang bersifat personal karena mempertimbangkan preferensi pengguna lain yang serupa, namun lemah dalam menangani data pengguna atau film baru (cold start). Sebaliknya, Content-Based Filtering lebih kuat untuk merekomendasikan film baru karena hanya mengandalkan informasi konten seperti judul, namun cenderung memberikan hasil yang kurang variatif karena terbatas pada kemiripan fitur permukaan.
@@ -227,3 +371,5 @@ Collaborative Filtering memiliki keunggulan dalam memberikan rekomendasi yang be
 [8] Evidently AI. (2025). Precision and recall at K in ranking and recommendations. Retrieved from https://www.evidentlyai.com/ranking-metrics/precision-recall-at-k
 
 [9] HKUST Library. (2023). Fuzzy String Matching Using FuzzyWuzzy. Retrieved from https://library.hkust.edu.hk/sc/fuzzywuzzy/
+
+[10] Attalariq, M., & Baizal, Z. K. A. (2023). Chatbot-Based Book Recommender System Using Singular Value Decomposition. Journal of Information System Research (JOSH), 4(4). https://doi.org/10.47065/josh.v4i4.3817
