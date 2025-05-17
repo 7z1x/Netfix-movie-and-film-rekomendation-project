@@ -316,8 +316,8 @@ print(recommendations)
   
 | Metrik | Nilai   |
 |--------|---------|
-| RMSE   | 0.8689  |
-| MAE    | 0.6781  |
+| RMSE   | 0.8684  |
+| MAE    | 0.6776  |
 
 - Hasil Evaluasi
   - RMSE: Nilai RMSE dari hasil pengujian menunjukkan bahwa model memiliki error prediksi yang dapat diterima untuk skala 1–5.
@@ -341,14 +341,14 @@ Untuk mengukur seberapa baik rekomendasi dari model Content-Based Filtering, dil
 
 | Metrik        | Nilai |
 |---------------|-------|
-| Precision@10  | 0.4   |
-| Recall@10     | 0.25  |
-| Hit Rate      | 1.0   |
+| Precision@10  | 0.3000|
+| Recall@10     | 0.0323|
+| Hit Rate      | 1.0000|
 
 Angka-angka ini menunjukkan bahwa model mampu merekomendasikan film dengan judul yang relevan dalam jumlah yang signifikan, dan setidaknya ada satu film relevan di hasil rekomendasi.
 
 ## Kesimpulan
-Evaluasi model Collaborative Filtering (SVD) menghasilkan nilai RMSE sebesar 0.86 dan MAE sebesar 0.66, yang menunjukkan bahwa model ini cukup baik dalam memprediksi rating pengguna terhadap film. Sementara itu, Content-Based Filtering yang dievaluasi menggunakan Precision@10 sebesar 0.4, Recall@10 sebesar 0.25, dan Hit Rate sebesar 1.0, menunjukkan bahwa sistem mampu merekomendasikan film yang cukup relevan berdasarkan kemiripan judul, meskipun cakupannya terhadap semua film relevan masih terbatas. Dari kesimpulan ini model Collaborative Filtering (SVD) lebih cocok ketimbang Content-Based Filtering karena dataset yang saya gunakan cenderung lebih cenderung lebih besar dan kurang beragam beragam. Collaborative Filtering (SVD) sangat efektif dalam menangkap pola tersembunyi dalam preferensi pengguna yang tidak bergantung pada fitur eksplisit dari item (seperti genre, aktor, atau deskripsi film). Sebaliknya, Content-Based Filtering membutuhkan fitur eksplisit dari item untuk membuat rekomendasi, yang mungkin tidak tersedia atau tidak lengkap dalam dataset yang saya gunakan.
+Evaluasi model Collaborative Filtering (SVD) menghasilkan nilai RMSE sebesar 0.8684 dan MAE sebesar 	0.6776, yang menunjukkan bahwa model ini cukup baik dalam memprediksi rating pengguna terhadap film. Sementara itu, Content-Based Filtering yang dievaluasi menggunakan Precision@10 sebesar 0.3000, Recall@10 sebesar 0.0323, dan Hit Rate sebesar 1.0000, menunjukkan bahwa sistem mampu merekomendasikan film yang cukup relevan berdasarkan kemiripan judul, meskipun cakupannya terhadap semua film relevan masih terbatas. Dari kesimpulan ini model Collaborative Filtering (SVD) lebih cocok ketimbang Content-Based Filtering karena dataset yang saya gunakan cenderung lebih cenderung lebih besar dan kurang beragam beragam. Collaborative Filtering (SVD) sangat efektif dalam menangkap pola tersembunyi dalam preferensi pengguna yang tidak bergantung pada fitur eksplisit dari item (seperti genre, aktor, atau deskripsi film). Sebaliknya, Content-Based Filtering membutuhkan fitur eksplisit dari item untuk membuat rekomendasi, yang mungkin tidak tersedia atau tidak lengkap dalam dataset yang saya gunakan.
 
 ### Kelebihan dan Kekurangan
 Collaborative Filtering memiliki keunggulan dalam memberikan rekomendasi yang bersifat personal karena mempertimbangkan preferensi pengguna lain yang serupa, namun lemah dalam menangani data pengguna atau film baru (cold start). Sebaliknya, Content-Based Filtering lebih kuat untuk merekomendasikan film baru karena hanya mengandalkan informasi konten seperti judul, namun cenderung memberikan hasil yang kurang variatif karena terbatas pada kemiripan fitur permukaan.
