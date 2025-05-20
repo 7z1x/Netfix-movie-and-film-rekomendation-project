@@ -78,28 +78,29 @@ Berisi **17770 data informasi dan 3 fitur** detail tentang film dalam dataset:
 ### Distribusi Data
 - Sebaran rating dianalisis menggunakan histogram dan menunjukkan bahwa sebagian besar pengguna memberikan rating di tengah-tengah skala (3–4).
   
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/rating.jpg)
+![rating](https://github.com/user-attachments/assets/4f0fad6c-e2f0-460c-a832-c3234943ff4e)
 
 - Film dengan jumlah rating terbanyak juga telah divisualisasikan untuk mengidentifikasi film yang paling populer berdasarkan partisipasi pengguna.
   
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/6d464a4597c6441dd30cfe8107b12d2f515f7f6f/image/jumlah%20film.jpg)
+![jumlah film](https://github.com/user-attachments/assets/9dc36d97-c93c-4045-85dc-a63dc691717b)
 
 ### Cek Outlier
 - Dataset Rating : Semua kolom terlihat bersih, tidak ada outlier signifikan secara statistik, untuk **rating**  hanya sedikit outlier yang menjadi titik pada boxplotnya namun nilai rendah seperti 1 sebagai outlier secara statistik, bukan karena nilai itu salah, tapi karena distribusi data yang tidak seimbang (kebanyakan nilai 3–5)
   
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_Movie_ID.png)
+![boxplot_Movie_ID](https://github.com/user-attachments/assets/37aa296c-0f9d-42e8-8229-55dc895f0734)
 
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_Rating.png)
+![boxplot_Rating](https://github.com/user-attachments/assets/da74b48f-740f-4c7a-93fd-c1cc2fe268a2)
 
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_User_ID.png)
+![boxplot_User_ID](https://github.com/user-attachments/assets/d9754bfb-9cf9-4e29-a1b6-f372235fcf83)
+
 
 <br>
 
 - Dataset Movie : Dataset memiliki outlier pada kolom **Year** namun tidak perlu ditangani karena kolom ini tidak digunakan sebagai fitur dalam content-based filtering dan tidak memengaruhi hasil rekomendasi.
 
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_movie_df_Movie_ID.png)
+![boxplot_movie_df_Movie_ID](https://github.com/user-attachments/assets/f62ed7d1-2c68-4490-a9d2-2b762e6f8cbb)
 
-![](https://github.com/7z1x/Netfix-movie-and-film-rekomendation-project/blob/04277974630fd6c8f0e428b476e11c7b461676aa/image/boxplot_Year.png)
+![boxplot_Year](https://github.com/user-attachments/assets/1643e0fd-07e4-4373-8e03-d464f70852b4)
 
 <br>
 
@@ -177,7 +178,6 @@ tfidf_matrix = tfidf.fit_transform(movie_features['Clean_Name'])
 
 ### Model Collaborative Filtering
 - Model menggunakan algoritma SVD yang dilatih selama 10 epoch, artinya model akan menyempurnakan representasi laten pengguna dan item melalui 10 iterasi agar semakin akurat dalam memprediksi rating.
-- Evaluasi menggunakan RMSE (Root Mean Squared Error) memberikan gambaran sejauh mana prediksi rating model mendekati rating sebenarnya; semakin rendah nilai RMSE, semakin akurat model.
 - Model SVD bekerja dengan mendekomposisi matriks rating pengguna-item menjadi representasi laten berdimensi rendah, yang menangkap pola tersembunyi antara preferensi pengguna dan karakteristik item; melalui proses ini, sistem mampu memprediksi rating yang belum diberikan secara akurat meskipun data sangat jarang (sparse), SVD terbukti memiliki keunggulan dalam menangani dataset besar, mengekstraksi fitur, mengurangi noise dan dimensi, sehingga mempercepat komputasi[10].
 - Proses sistem rekomendasi berbasis model prediktif SVD yang digunakan untuk menghasilkan rekomendasi personal bagi pengguna berdasarkan estimasi rating tertinggi terhadap film yang belum pernah mereka tonton. Prosesnya meliputi:
   - Identifikasi film yang belum ditonton oleh pengguna (unrated_movies), agar sistem hanya memberikan rekomendasi yang benar-benar baru dan relevan.
